@@ -10,6 +10,7 @@ variable "region" {
 variable "size" {
   default = "512mb"
 }
+variable "do_ssh_fingerprint" {}
 
 resource "digitalocean_droplet" "docker-registry" {
   count = "${var.count}"
@@ -17,6 +18,9 @@ resource "digitalocean_droplet" "docker-registry" {
   name = "docker-registry-${count.index}"
   region = "${var.region}"
   size = "${var.size}"
+  ssh_keys = [
+    "${var.do_ssh_fingerprint}"
+  ]
 }
 
 output "public_ips" {
